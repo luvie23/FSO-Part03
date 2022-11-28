@@ -35,7 +35,7 @@ let persons = [
 ]
 
 app.get('/', (request, response) => {
-    response.send('<h1>rer<h1/>')
+    response.send('<a href="/api/persons">persons list<a/>')
 })
 
 app.get('/api/persons', (request, response) => {
