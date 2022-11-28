@@ -64,13 +64,33 @@ const generateId = () => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
+  if (!body.number) {
+    return response.status(400).json({ 
+      error: 'number missing' 
+    })
+  }
+
+  if (!body.name) {
+    return response.status(400).json({ 
+      error: 'name missing' 
+    })
+  }
   
+  const isDuplicate = persons.filter(person => person.name.toLowerCase() === body.name.toLowerCase())
+  
+
+  if (isDuplicate.length > 0) {
+    return response.status(400).json({
+      error: 'name already exists'
+    })
+  }
+
   const person = {
     name: body.name,
     number: body.number,
     id: generateId(),
   }
-
+  
   persons = persons.concat(person)
 
   response.json(person)
